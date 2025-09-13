@@ -6,7 +6,7 @@ const sendButton = document.getElementById('send-button');
 // ==================================================================
 // !!! IMPORTANTE: COLE SUA CHAVE DE API DO GOOGLE AI STUDIO AQUI !!!
 // ==================================================================
-const GEMINI_API_KEY = 'SUA_CHAVE_DE_API_DO_GOOGLE_VAI_AQUI';
+const GEMINI_API_KEY = 'AIzaSyC6Cl8I6YNGHTNWBWBwp2fNVHtZZn0SD2U';
 // ==================================================================
 
 // Objeto para guardar todo o estado do jogo
