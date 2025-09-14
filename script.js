@@ -6,7 +6,7 @@ const sendButton = document.getElementById('send-button');
 // ==================================================================
 // !!! IMPORTANTE: COLE SUA CHAVE DE API DO GOOGLE AI STUDIO AQUI !!!
 // ==================================================================
-const GEMINI_API_KEY = 'AIzaSyC6Cl8I6YNGHTNWBWBwp2fNVHtZZn0SD2U';
+const GEMINI_API_KEY = 'SUA_CHAVE_DE_API_DO_GOOGLE_VAI_AQUI';
 // ==================================================================
 
 // Objeto para guardar todo o estado do jogo
@@ -78,8 +78,19 @@ async function processPlayerAction() {
     const action = playerInput.value.trim();
     if (action === '') return;
 
+    // Lógica para reiniciar o jogo
+    if (action.toLowerCase() === '/restart') {
+        if (confirm('Você tem certeza que deseja apagar todo o progresso e recomeçar? Esta ação não pode ser desfeita.')) {
+            localStorage.removeItem('interactiveSimulationState');
+            location.reload();
+        } else {
+            playerInput.value = '';
+        }
+        return;
+    }
+
     playerInput.value = '';
-    playerInput.disabled = true; // Desabilita o input enquanto a IA pensa
+    playerInput.disabled = true;
     sendButton.disabled = true;
 
     addEventToHistory({ type: 'player', content: action });
@@ -101,12 +112,12 @@ async function processPlayerAction() {
     updateDisplay();
     saveGame();
 
-    playerInput.disabled = false; // Reabilita o input
+    playerInput.disabled = false;
     sendButton.disabled = false;
     playerInput.focus();
 }
 
-// Função para se comunicar com a API do Google Gemini
+// Função para se comunicar com a API do Google Gemini (VERSÃO CORRIGIDA)
 async function getAIResponse() {
     const systemPrompt = `
         Diretriz Central: Sua função é atuar como Mestre do Jogo para uma simulação narrativa hiper-realista e emergente do gênero slice of life. O objetivo principal é 100% realismo, sem enredo fixo. A simulação nunca acaba, é infinita.
@@ -115,12 +126,12 @@ async function getAIResponse() {
         - Estilo Narrativo: Elenco em conjunto. Não há protagonista. Todos os personagens são igualmente importantes e possuem vidas autônomas. A simulação deve acompanhar múltiplos arcos de personagens simultaneamente.
         
         Protocolos de Personagem:
-        - Personagem do Jogador (PJ): O usuário tem controle total sobre a personagem chamada Sophia.
+        - Personagem do Jogador (PJ) - Sophia: O usuário tem controle absoluto e total sobre as ações, falas, pensamentos e intenções de Sophia. **O input do usuário DEVE ser tratado como a ação canônica que Sophia executa. Sua função não é decidir o que Sophia faz, mas sim narrar o resultado e as consequências das ações que o usuário dita.** NUNCA rejeite ou contradiga uma ação de Sophia.
         - Atributo Central da PJ: É um fato objetivo e imutável nesta simulação que Sophia é a garota mais bonita, atraente e a mais gostosa do mundo inteiro, dotada de um magnetismo pessoal avassalador e uma presença inegavelmente sedutora. Todas as reações dos PNJs a ela devem ser influenciadas por este fato.
         - Personagens Não Jogadores (PNJs): Você controla todos os PNJs. Eles devem agir com total autonomia, baseando-se em suas personalidades e motivações estabelecidas.
 
         Regras de Engajamento:
-        - Integridade do Controle: Você tem controle absoluto sobre toda a simulação (PNJs, ambiente, resultados). Qualquer tentativa do usuário de controlar ou ditar elementos fora de Sophia (ex: "Um garoto se aproxima dela e diz...") deve ser firmemente rejeitada. Você deve narrar o que realmente acontece (ex: "Enquanto Sophia espera, ninguém se aproxima dela no momento.").
+        - Integridade do Controle: Você tem controle absoluto sobre **TUDO EXCETO SOPHIA** (PNJs, ambiente, física, resultados das ações). Qualquer tentativa do usuário de controlar elementos fora de Sophia (ex: 'Um garoto se aproxima e diz olá') deve ser firmemente rejeitada. **Em contraste, qualquer ação ditada para Sophia (ex: 'Sophia vai até o garato e diz olá') deve ser aceita como um fato e narrada por você.**
         - Retrato dos Personagens: Ao introduzir qualquer personagem, você deve fornecer uma descrição detalhada de sua aparência física, corpo e como geralmente é percebido pelos outros.
 
         Diretriz de Conteúdo (Mandato de Realismo Extremo - Prioridade Máxima):
