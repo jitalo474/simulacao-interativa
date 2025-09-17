@@ -16,18 +16,40 @@ body {
     border: 1px solid #333;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+#status-bar {
+    padding: 10px 20px;
+    border-bottom: 1px solid #333;
+    background-color: #1a1a1a;
+    font-size: 0.9em;
+    text-align: center;
+    font-family: monospace;
+    flex-shrink: 0; /* Impede que a barra encolha */
 }
 
 #story-output {
     flex-grow: 1;
     padding: 20px;
     overflow-y: auto;
-    white-space: pre-wrap; /* Mantém a formatação do texto */
+    white-space: pre-wrap; /* Mantém a formatação do texto da IA */
+    line-height: 1.6;
+}
+
+#story-output p {
+    margin: 0 0 1em 0;
+}
+
+#story-output .player-action {
+    color: #aae;
+    font-weight: bold;
 }
 
 #input-container {
     display: flex;
     border-top: 1px solid #333;
+    flex-shrink: 0; /* Impede que o input encolha */
 }
 
 #player-input {
@@ -37,6 +59,12 @@ body {
     border: none;
     padding: 15px;
     font-size: 1em;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#player-input:focus {
+    outline: none;
+    background-color: #333;
 }
 
 #send-button {
@@ -45,4 +73,9 @@ body {
     border: none;
     padding: 0 20px;
     cursor: pointer;
+    font-size: 1em;
+}
+
+#send-button:hover {
+    background-color: #555;
 }
