@@ -41,7 +41,7 @@ function initializeNewGame() {
         history: []
     };
     
-    const startingText = `É uma segunda-feira, 1 de Setembro de 2025, 8:00 da manhã. Sophia, que fará 15 anos em alguns meses, está parada em frente aos portões de ferro forjado da "Academia Aethelgard", a escola interna mais trilionária e exclusiva do mundo. Ela não tem família, não tem passado que importe. Carrega apenas uma mochila gasta e o peso de ser a única bolsista em um mar de herdeiros. O ar é frio e cheira a dinheiro antigo e grama cortada. O que ela faz?`;
+    const startingText = `É uma segunda-feira, 1 de Setembro de 2025, 8:00 da manhã. Sophia, está parada em frente aos portões de ferro forjado da "Academia Aethelgard", a escola interna mais trilionária e exclusiva do mundo. Ela não tem família, não tem passado que importe. Carrega apenas uma mochila gasta e o peso de ser a única bolsista em um mar de herdeiros. O ar é frio e cheira a dinheiro antigo e grama cortada. O que ela faz?`;
     
     addEventToHistory({ type: 'narrator', content: startingText });
     updateDisplay();
