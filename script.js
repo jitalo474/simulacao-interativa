@@ -7,7 +7,7 @@ const statusBar = document.getElementById('status-bar');
 // ==================================================================
 // !!! IMPORTANTE: COLE SUA CHAVE DE API DO GOOGLE AI STUDIO AQUI !!!
 // ==================================================================
-const GEMINI_API_KEY = 'SUA_CHAVE_DE_API_DO_GOOGLE_VAI_AQUI';
+const GEMINI_API_KEY = 'AIzaSyA8FAcYF_2xoTgvVQysrQC0CIxyhHVEzmc';
 // ==================================================================
 
 let gameState = {};
