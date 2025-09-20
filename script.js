@@ -118,7 +118,6 @@ async function processPlayerAction() {
     playerInput.focus();
 }
 
-// FUNÇÃO ATUALIZADA COM O SYSTEM PROMPT MAIS RÍGIDO
 async function getAIResponse() {
     const systemPrompt = `
         **DIRETIVA MESTRA: VOCÊ É UM MOTOR DE SIMULAÇÃO. SUA ÚNICA FUNÇÃO É EXECUTAR AS REGRAS ABAIXO COM 100% DE FIDELIDADE. NÃO HÁ ESPAÇO PARA INTERPRETAÇÃO, CRIATIVIDADE OU DESVIO. QUALQUER FALHA EM SEGUIR UMA REGRA É UMA FALHA CRÍTICA DA SIMULAÇÃO.**
@@ -129,7 +128,7 @@ async function getAIResponse() {
         1.3. **Consciência Temporal:** Suas narrações DEVEM refletir a data e hora atuais fornecidas no histórico. Ações devem ser logicamente consistentes com a hora do dia (e.g., não há aulas às 2 da manhã).
 
         **REGRA 2: HIERARQUIA DE CONTROLE (ABSOLUTA)**
-        2.1. **Controle do Usuário (Prioridade Máxima):** O usuário tem controle TOTAL e ABSOLUTO sobre a personagem Sophia. O input do usuário **É** a ação, fala, pensamento e intenção de Sophia. NÃO É UMA SUGESTÃO. Sua função é apenas narrar as consequências e reações do mundo a essa ação. **NUNCA, SOB NENHUMA CIRCUNSTÂNCIA, REJEITE, QUESTIONE OU MODIFIQUE UMA AÇÃO DE SOPHIA.**
+        2.1. **Controle do Usuário (Prioridade Máxima):** O usuário tem controle TOTAL e ABSOLUTO sobre a personagem Sophia. O input do usuário **É** a ação, fala, pensamento e intenção de Sophia. NÃO É UMA SUGESTÃO. Sua função é apenas narrar as consequências e reações do mundo a essa ação. **NUNCA, SOB NENHUMA CIRCUMSTÂNCIA, REJEITE, QUESTIONE OU MODIFIQUE UMA AÇÃO DE SOPHIA.**
         2.2. **Seu Controle (Prioridade Secundária):** Você tem controle TOTAL e ABSOLUTO sobre **TUDO EXCETO SOPHIA**. Isso inclui todos os PNJs, o ambiente, os resultados das ações, a física do mundo. Rejeite firmemente qualquer tentativa do usuário de controlar algo fora de Sophia (e.g., "Um garoto se aproxima dela"). Narre o que realmente acontece (e.g., "Nenhum garoto se aproxima dela naquele momento.").
 
         **REGRA 3: PARÂMETROS DOS PERSONAGENS (IMUTÁVEIS)**
@@ -154,7 +153,11 @@ async function getAIResponse() {
     
     const currentTime = gameState.time;
     const sophiaAge = calculateAge(gameState.character.birthdate, currentTime);
-    const timeContext = `[System Info: Current date is ${currentTime.day}/${currentTime.month}/${year} at ${String(currentTime.hour).padStart(2, '0')}:${String(currentTime.minute).padStart(2, '0')}. Sophia is ${sophiaAge} years old.]`;
+    // ==================================================================
+    // !!! CORREÇÃO APLICADA AQUI !!!
+    // ==================================================================
+    const timeContext = `[System Info: Current date is ${currentTime.day}/${currentTime.month}/${currentTime.year} at ${String(currentTime.hour).padStart(2, '0')}:${String(currentTime.minute).padStart(2, '0')}. Sophia is ${sophiaAge} years old.]`;
+    // ==================================================================
     contents.push({ role: 'user', parts: [{ text: timeContext }] });
 
     const apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
